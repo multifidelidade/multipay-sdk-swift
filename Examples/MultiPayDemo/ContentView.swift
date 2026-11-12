@@ -4,7 +4,7 @@ import MultiPaySDK
 /// App de teste do SDK. Fluxo: whoami -> criar pagamento -> abrir checkout (ASWebAuthenticationSession)
 /// -> ler o retorno -> consultar o status na API. Use SOMENTE chave mp_test_.
 struct ContentView: View {
-    @AppStorage("baseURL") private var baseURL = "https://api.multifidelidade.app"
+    @AppStorage("baseURL") private var baseURL = "https://api.multifidelidade.app/integracoes"
     @AppStorage("apiKey") private var apiKey = ""
     @AppStorage("extraHosts") private var extraHosts = ""      // ex.: homolog.exemplo.com, separados por vírgula
     @AppStorage("cpf") private var cpf = "52998224725"         // CPF de teste válido
@@ -16,7 +16,7 @@ struct ContentView: View {
     private let returnScheme = "multipaydemo"
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
                 Section("Ambiente") {
                     TextField("URL da API (https)", text: $baseURL).textInputAutocapitalization(.never).autocorrectionDisabled()
@@ -45,6 +45,7 @@ struct ContentView: View {
             }
             .navigationTitle("MultiPay Demo")
         }
+        .navigationViewStyle(.stack)
     }
 
     // MARK: ações

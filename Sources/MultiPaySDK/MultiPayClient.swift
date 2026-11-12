@@ -113,7 +113,7 @@ private final class NoRedirect: NSObject, URLSessionTaskDelegate {
 /// No app use apenas `mp_test_` (demo/sandbox); em produção o app fala com o SEU backend, que cria o pagamento.
 /// Backends Swift (Vapor...) usam `forBackend`.
 public struct MultiPayClient: Sendable {
-    public static let defaultBaseURL = URL(string: "https://api.multifidelidade.app")!
+    public static let defaultBaseURL = URL(string: "https://api.multifidelidade.app/integracoes")!
 
     private let apiKey: String
     private let baseURL: URL
