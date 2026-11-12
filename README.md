@@ -2,10 +2,13 @@
 
 Swift Package (iOS 15+, macOS 12+). Sem dependências externas.
 
-> ⚠️ **Verificado só parcialmente.** Em 11/11/2026 o núcleo (cliente HTTP, parsing do retorno, validação de URL) compilou e passou 9 testes no Linux (Swift 5.9, Docker).
-> **Ainda não rodou em Apple:** `WebhookVerifier` (CryptoKit) e `MultiPayCheckout` (ASWebAuthenticationSession/UIKit) só compilam no Xcode. Abra `Package.swift` no Xcode, rode `⌘U` e teste no simulador antes de publicar.
-> Para repetir no Linux: `docker run --rm -v "$PWD:/src:ro" swift:5.9 bash -c "cp -r /src /w && cd /w && swift test"`.
-> A lógica espelha o SDK Kotlin (20 testes verdes) e usa o mesmo vetor de assinatura de webhook do servidor .NET e do MCP.
+> ✅ **Verificado em Apple (12/11/2026).** Xcode 26.2 (Swift 6.2.3), macOS 26 (arm64), iOS Simulator 18.5 (iPhone 16).
+> - `swift build` e `swift test` no macOS: 11 testes, 0 falhas.
+> - `xcodebuild build` para iOS Simulator (`generic/platform=iOS Simulator`) e `xcodebuild test` no iPhone 16: 11 testes, 0 falhas.
+> - `WebhookVerifier` (CryptoKit) passa o vetor compartilhado com o servidor .NET e o MCP. Antes, em 11/11/2026, o núcleo tinha passado 9 testes no Linux (Swift 5.9).
+> - **Ainda não testado:** o fluxo real de `ASWebAuthenticationSession` em `MultiPayCheckout` (compila, mas não foi exercitado em simulador nem dispositivo), watchOS/tvOS/visionOS e rede contra o servidor MultiPay real.
+> - Para repetir no Linux: `docker run --rm -v "$PWD:/src:ro" swift:5.9 bash -c "cp -r /src /w && cd /w && swift test"`.
+> - A lógica espelha o SDK Kotlin (20 testes verdes).
 
 ## Princípio de segurança
 
