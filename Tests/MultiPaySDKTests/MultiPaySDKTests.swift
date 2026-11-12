@@ -156,4 +156,15 @@ final class ClientTests: XCTestCase {
             XCTFail("deveria lançar")
         } catch let e as MultiPayError { XCTAssertEqual(e.code, "invalid_request") }
     }
+
+    func testBaseURLPrefixIsKeptInRequestURL() async throws {
+        MockURLProtocol.handler = { _ in (201, self.payment("PED-1"), [:]) }
+        for base in ["https://api.multifidelidade.app/integracoes", "https://api.multifidelidade.app/integracoes/"] {
+            let client = try MultiPayClient.forApp(testApiKey: testKey, baseURL: URL(string: base)!, session: session())
+            _ = try await client.createPayment(request())
+            XCTAssertEqual(MockURLProtocol.requests.last?.url?.absoluteString,
+                           "https://api.multifidelidade.app/integracoes/v2/payments", "base: \(base)")
+        }
+        XCTAssertEqual(MultiPayClient.defaultBaseURL.absoluteString, "https://api.multifidelidade.app/integracoes")
+    }
 }
